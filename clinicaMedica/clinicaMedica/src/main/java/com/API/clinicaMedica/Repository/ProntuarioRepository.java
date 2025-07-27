@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.API.clinicaMedica.Model.ProntuarioModel;
 @Repository
-public interface ProntuarioRepository extends JpaRepository<ProntuarioModel, Long>{
+public interface ProntuarioRepository extends JpaRepository<ProntuarioModel, String>{
     
 }

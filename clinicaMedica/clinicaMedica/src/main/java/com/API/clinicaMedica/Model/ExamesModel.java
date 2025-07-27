@@ -25,7 +25,7 @@ import lombok.Setter;
 public class ExamesModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JsonBackReference

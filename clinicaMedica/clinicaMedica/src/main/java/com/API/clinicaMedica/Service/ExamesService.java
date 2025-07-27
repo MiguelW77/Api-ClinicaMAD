@@ -22,7 +22,7 @@ public class ExamesService {
         return repository.findAll();
     }
 
-    public ExamesModel buscarPorId(Long id){
+    public ExamesModel buscarPorId(String id){
         Optional<ExamesModel> exames = repository.findById(id);
         if (exames.isPresent()) {
             return exames.get();
@@ -31,16 +31,15 @@ public class ExamesService {
         }
 }
 
-       public ExamesModel Atualizar(Long id, ExamesModel exames){
+       public ExamesModel Atualizar(String id, ExamesModel exames){
         ExamesModel examesModelExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Exames não encontrados por ID: " + id));
         examesModelExistente.setData_exame(exames.getData_exame());
         examesModelExistente.setLocal_exame(exames.getLocal_exame());
-        examesModelExistente.setStatus_exame(exames.getStatus_exame());
         examesModelExistente.setTipo_exame(exames.getTipo_exame());
         return repository.save(examesModelExistente);
        }
-       public void Deletar(Long id){
+       public void Deletar(String id){
          repository.deleteById(id);
        }
 }

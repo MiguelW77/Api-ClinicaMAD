@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.API.clinicaMedica.Model.ExamesModel;
 @Repository
-public interface ExamesRepository extends JpaRepository<ExamesModel, Long>{
+public interface ExamesRepository extends JpaRepository<ExamesModel, String>{
     
 }

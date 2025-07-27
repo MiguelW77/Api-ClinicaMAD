@@ -22,7 +22,7 @@ public class ProntuarioService {
         return repository.findAll();
     }
 
-    public ProntuarioModel BuscarPorId(Long id){
+    public ProntuarioModel BuscarPorId(String id){
         Optional<ProntuarioModel> prontuario = repository.findById(id);
         if (prontuario.isPresent()) {
             return prontuario.get();
@@ -30,7 +30,7 @@ public class ProntuarioService {
             return null;
         }
     }
-    public ProntuarioModel Atualizar(Long id, ProntuarioModel prontuario){
+    public ProntuarioModel Atualizar(String id, ProntuarioModel prontuario){
         ProntuarioModel prontuarioExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Prontuario não encontrado com o ID:" + id));
         prontuarioExistente.setCrm_medico(prontuario.getCrm_medico());
@@ -40,7 +40,7 @@ public class ProntuarioService {
         prontuarioExistente.setSintomas(prontuario.getSintomas());
         return repository.save(prontuarioExistente);
     }
-    public void Deletar(Long id){
+    public void Deletar(String id){
          repository.deleteById(id);
     }
 }

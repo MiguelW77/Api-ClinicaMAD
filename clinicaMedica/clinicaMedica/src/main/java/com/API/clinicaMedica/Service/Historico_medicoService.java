@@ -21,7 +21,7 @@ public class Historico_medicoService {
     public List<Historico_medicoModel> listartodos(){
         return repository.findAll();
     }
-    public Historico_medicoModel BuscarPorId(Long id){
+    public Historico_medicoModel BuscarPorId(String id){
         Optional<Historico_medicoModel> historico_medico = repository.findById(id);
         if (historico_medico.isPresent()) {
             return historico_medico.get();
@@ -29,7 +29,7 @@ public class Historico_medicoService {
             return null;
         }
     }
-    public Historico_medicoModel Atualizar(Long id, Historico_medicoModel historico_medico){
+    public Historico_medicoModel Atualizar(String id, Historico_medicoModel historico_medico){
         Historico_medicoModel historico_medicoExistente = repository.findById(id)
          .orElseThrow(() -> new RuntimeException("Historico Medico não encontrada com o ID: " + id));
          historico_medicoExistente.setDataConsulta(historico_medico.getDataConsulta());
@@ -39,7 +39,7 @@ public class Historico_medicoService {
          historico_medicoExistente.setPrescricao(historico_medico.getPrescricao());
             return repository.save(historico_medicoExistente);
         }
-        public void Deletar(Long id){
+        public void Deletar(String id){
             repository.deleteById(id);
         }
 }

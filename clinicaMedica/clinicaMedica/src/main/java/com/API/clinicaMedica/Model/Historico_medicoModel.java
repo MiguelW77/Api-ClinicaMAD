@@ -24,7 +24,7 @@ public class Historico_medicoModel {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-   private Long id;
+   private String id;
 
    @ManyToOne
    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)

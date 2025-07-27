@@ -24,7 +24,7 @@ public class ConsultaService {
     }
 
     
-    public ConsultaModel BuscarPorId(Long id) {
+    public ConsultaModel BuscarPorId(String id) {
         Optional<ConsultaModel> consulta = repository.findById(id);
         if (consulta.isPresent()) {
             return consulta.get();
@@ -34,7 +34,7 @@ public class ConsultaService {
     }
        
 
-         public ConsultaModel Atualizar(Long id, ConsultaModel consulta) {
+         public ConsultaModel Atualizar(String id, ConsultaModel consulta) {
     ConsultaModel consultaExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Consulta não encontrada com o ID: " + id));
 
@@ -45,7 +45,7 @@ public class ConsultaService {
     
   }
 
-    public void Deletar(Long id) {
+    public void Deletar(String id) {
         repository.deleteById(id);
     }
     

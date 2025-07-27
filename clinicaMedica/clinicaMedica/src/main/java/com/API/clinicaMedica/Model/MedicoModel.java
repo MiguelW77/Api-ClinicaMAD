@@ -1,5 +1,10 @@
 package com.API.clinicaMedica.Model;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -14,16 +19,18 @@ import lombok.Setter;
 @Table(name = "medico")
 
 @NoArgsConstructor
-public class MedicoModel {
+public class MedicoModel implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
+    private String role = "MEDICO";
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 11 , unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 50)
@@ -59,4 +66,20 @@ public class MedicoModel {
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
     private List<PacienteModel> pacientes;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+       return List.of(new SimpleGrantedAuthority("ROLE" + role));
+       
+    }
+
+    @Override
+    public String getPassword() {
+       return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.cpf;
+    }
 }

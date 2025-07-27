@@ -23,7 +23,7 @@ public class PacienteService {
     }
 
     
-    public PacienteModel BuscarPorId(Long id) {
+    public PacienteModel BuscarPorId(String id) {
         Optional<PacienteModel> paciente = repository.findById(id);
         if (paciente.isPresent()) {
             return paciente.get();
@@ -33,7 +33,7 @@ public class PacienteService {
     }
        
 
-         public PacienteModel Atualizar(Long id, PacienteModel paciente) {
+         public PacienteModel Atualizar(String id, PacienteModel paciente) {
     PacienteModel pacienteExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Paciente não encontrado com o ID: " + id));
 
@@ -44,7 +44,7 @@ public class PacienteService {
 
   }
 
-    public void Deletar(Long id) {
+    public void Deletar(String id) {
         repository.deleteById(id);
     }
 

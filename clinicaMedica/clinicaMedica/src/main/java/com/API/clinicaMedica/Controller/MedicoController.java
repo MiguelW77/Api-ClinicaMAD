@@ -34,7 +34,7 @@ public class MedicoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MedicoModel> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<MedicoModel> buscarPorId(@PathVariable String id) {
         MedicoModel medico = service.BuscarPorId(id);
         if (medico != null) {
             return ResponseEntity.ok(medico);
@@ -49,7 +49,7 @@ public class MedicoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MedicoModel> atualizar(@PathVariable Long id, @RequestBody MedicoModel medico) {
+    public ResponseEntity<MedicoModel> atualizar(@PathVariable String  id, @RequestBody MedicoModel medico) {
         try{
             MedicoModel medicoAtualizado = service.Atualizar(id, medico);
             return ResponseEntity.ok(medicoAtualizado);
@@ -59,7 +59,7 @@ public class MedicoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
         try {
             service.Deletar(id);
             return ResponseEntity.noContent().build();

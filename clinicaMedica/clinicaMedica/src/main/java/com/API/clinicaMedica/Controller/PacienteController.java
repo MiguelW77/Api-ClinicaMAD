@@ -35,7 +35,7 @@ public class PacienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteModel> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<PacienteModel> buscarPorId(@PathVariable String id) {
         PacienteModel paciente = service.BuscarPorId(id);
         if (paciente != null) {
             return ResponseEntity.ok(paciente);
@@ -50,7 +50,7 @@ public class PacienteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteModel> atualizar(@PathVariable Long id, @RequestBody PacienteModel paciente) {
+    public ResponseEntity<PacienteModel> atualizar(@PathVariable String id, @RequestBody PacienteModel paciente) {
         try{
             PacienteModel pacienteAtualizado = service.Atualizar(id, paciente);
             return ResponseEntity.ok(pacienteAtualizado);
@@ -60,7 +60,7 @@ public class PacienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
         try {
             service.Deletar(id);
             return ResponseEntity.noContent().build();

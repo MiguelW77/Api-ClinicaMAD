@@ -1,5 +1,11 @@
 package com.API.clinicaMedica.Model;
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,15 +24,17 @@ import lombok.Setter;
 
 @Table(name = "paciente")
 @NoArgsConstructor
-public class PacienteModel {
+public class PacienteModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
+
+    private String role = "PACIENTE";
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 15)
@@ -52,6 +60,23 @@ public class PacienteModel {
     
     @Column(nullable = false, length = 15)
     private String cep;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+        
+       
+    }
     
 
 
