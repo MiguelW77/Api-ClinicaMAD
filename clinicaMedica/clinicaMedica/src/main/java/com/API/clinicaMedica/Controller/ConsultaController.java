@@ -33,7 +33,7 @@ public class ConsultaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaModel> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ConsultaModel> buscarPorId(@PathVariable String id) {
         ConsultaModel consulta = service.BuscarPorId(id);
         if (consulta != null) {
             return ResponseEntity.ok(consulta);
@@ -48,7 +48,7 @@ public class ConsultaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultaModel> atualizar(@PathVariable Long id, @RequestBody ConsultaModel consulta) {
+    public ResponseEntity<ConsultaModel> atualizar(@PathVariable String id, @RequestBody ConsultaModel consulta) {
         try{
             ConsultaModel consultaAtualizada = service.Atualizar(id, consulta);
             return ResponseEntity.ok(consultaAtualizada);
@@ -58,7 +58,7 @@ public class ConsultaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable String id) {
         try {
             service.Deletar(id);
             return ResponseEntity.noContent().build();

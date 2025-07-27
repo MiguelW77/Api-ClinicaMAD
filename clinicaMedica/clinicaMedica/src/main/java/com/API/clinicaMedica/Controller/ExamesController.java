@@ -31,7 +31,7 @@ public class ExamesController {
         return service.listarTodos();
     }
     @GetMapping("/{id}")
-        public ResponseEntity<ExamesModel> BuscarPorId(@PathVariable Long id){
+        public ResponseEntity<ExamesModel> BuscarPorId(@PathVariable String id){
             ExamesModel exames = service.buscarPorId(id);
             if (exames != null) {
                 return ResponseEntity.ok(exames);
@@ -44,7 +44,7 @@ public class ExamesController {
             return service.Salvar(exames);
         }
         @PutMapping("/{id}")
-        public ResponseEntity<ExamesModel> Atualizar(@PathVariable Long id, @RequestBody ExamesModel exames){
+        public ResponseEntity<ExamesModel> Atualizar(@PathVariable String id, @RequestBody ExamesModel exames){
             try {
                 ExamesModel examesAtualizado = service.Atualizar(id, exames);
                 return ResponseEntity.ok(examesAtualizado);
@@ -53,7 +53,7 @@ public class ExamesController {
             }
         }
         @DeleteMapping("/{id}")
-        public ResponseEntity<Void> deletar(@PathVariable Long id){
+        public ResponseEntity<Void> deletar(@PathVariable String id){
             try {
                 service.Deletar(id);
                 return ResponseEntity.noContent().build();

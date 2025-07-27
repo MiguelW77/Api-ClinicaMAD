@@ -32,7 +32,7 @@ public class Historico_medicoController {
         return service.listartodos();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Historico_medicoModel> buscarPorId(@PathVariable Long id){
+    public ResponseEntity<Historico_medicoModel> buscarPorId(@PathVariable String id){
         Historico_medicoModel historico_medico = service.BuscarPorId(id);
         if (historico_medico != null) {
             return ResponseEntity.ok(historico_medico);
@@ -45,7 +45,7 @@ public class Historico_medicoController {
         return service.Salvar(historico_medico);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Historico_medicoModel> Atualizar(@PathVariable Long id, @RequestBody Historico_medicoModel historico_medico){
+    public ResponseEntity<Historico_medicoModel> Atualizar(@PathVariable String id, @RequestBody Historico_medicoModel historico_medico){
         try {
             Historico_medicoModel historico_medicoAtualizado = service.Atualizar(id, historico_medico);
             return ResponseEntity.ok(historico_medicoAtualizado);
@@ -54,7 +54,7 @@ public class Historico_medicoController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id){
+    public ResponseEntity<Void> deletar(@PathVariable String id){
         try {
             service.Deletar(id);
             return ResponseEntity.noContent().build();

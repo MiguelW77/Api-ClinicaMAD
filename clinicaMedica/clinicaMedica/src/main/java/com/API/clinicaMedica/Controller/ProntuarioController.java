@@ -30,7 +30,7 @@ public class ProntuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProntuarioModel> BuscarPorId(@PathVariable Long id){
+    public ResponseEntity<ProntuarioModel> BuscarPorId(@PathVariable String id){
         ProntuarioModel prontuario = service.BuscarPorId(id);
         if (prontuario != null) {
             return ResponseEntity.ok(prontuario);
@@ -45,7 +45,7 @@ public class ProntuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<ProntuarioModel> Atualizar(@PathVariable Long id, ProntuarioModel prontuario){
+    public ResponseEntity<ProntuarioModel> Atualizar(@PathVariable String id, ProntuarioModel prontuario){
         try {
             ProntuarioModel prontuarioAtualizado = service.Atualizar(id, prontuario);
             return ResponseEntity.ok(prontuarioAtualizado);
@@ -55,7 +55,7 @@ public class ProntuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> Deletar(@PathVariable Long id){
+    public ResponseEntity<Void> Deletar(@PathVariable String id){
         try {
             service.Deletar(id);
             return ResponseEntity.noContent().build();
