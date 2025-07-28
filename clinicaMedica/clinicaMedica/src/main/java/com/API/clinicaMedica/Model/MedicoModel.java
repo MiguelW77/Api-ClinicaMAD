@@ -1,14 +1,15 @@
 package com.API.clinicaMedica.Model;
-import java.util.Collection;
 import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import  jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import  jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Table(name = "medico")
 
 @NoArgsConstructor
-public class MedicoModel implements UserDetails{
+public class MedicoModel extends UsuarioModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,20 +67,4 @@ public class MedicoModel implements UserDetails{
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
     private List<PacienteModel> pacientes;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-       return List.of(new SimpleGrantedAuthority("ROLE" + role));
-       
-    }
-
-    @Override
-    public String getPassword() {
-       return this.senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.cpf;
-    }
 }
