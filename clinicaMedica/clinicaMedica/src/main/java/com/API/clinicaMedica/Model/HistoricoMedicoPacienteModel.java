@@ -2,6 +2,8 @@ package com.API.clinicaMedica.Model;
 
 import java.time.DateTimeException;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Historico_medicoModel {
+public class HistoricoMedicoPacienteModel {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -46,4 +48,11 @@ public class Historico_medicoModel {
     @Column(nullable = false)
     @Lob
     private String prescricao;
+
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    private MedicoModel medico;
+
+
 }

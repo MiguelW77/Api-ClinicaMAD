@@ -11,15 +11,13 @@ import lombok.Setter;
 public class ExamesDTO {
     private String nomePaciente;
     private String nomeMedico;
-    private LocalDate dataExame;
-    private String localExame; 
+    private LocalDate dataExame; 
     private String tipoExame;
 
     public ExamesDTO(ExamesModel model){
         this.nomePaciente = model.getPaciente().getNome();
         this.nomeMedico = model.getMedico().getNome();
         this.dataExame = model.getData_exame();
-        this.localExame = model.getLocal_exame();
         this.tipoExame = model.getTipo_exame();
     }
 

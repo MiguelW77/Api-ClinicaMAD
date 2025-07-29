@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import  jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-@Table(name = "medico")
+
 
 @NoArgsConstructor
 public class MedicoModel extends UsuarioModel {
@@ -54,7 +53,7 @@ public class MedicoModel extends UsuarioModel {
 
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
-    private List<ConsultaModel> consultas;
+    private List<AgendarConsultaModel> consultas;
     
     @OneToMany(mappedBy= "medico")
     @JsonManagedReference

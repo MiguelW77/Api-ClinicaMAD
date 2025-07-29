@@ -3,8 +3,6 @@ package com.API.clinicaMedica.Model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.cglib.core.Local;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -25,7 +23,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "consulta")
 @NoArgsConstructor
-public class ConsultaModel {
+public class AgendarConsultaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     
@@ -48,12 +46,14 @@ public class ConsultaModel {
     private LocalTime horaConsulta;
 
     @Column(nullable = false, length = 500)
-    private String consulta;
+    private String descConsulta;
 
     @Column(nullable = false, length = 50)
     private String especialidade;
 
     @Column(nullable = false, length = 50)
     private String statusConsulta;
+    @Column(nullable = false, length = 50)
+    private String convenio;
 
 }

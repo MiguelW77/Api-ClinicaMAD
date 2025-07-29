@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.ConsultaModel;
+import com.API.clinicaMedica.Model.AgendarConsultaModel;
 import com.API.clinicaMedica.Service.ConsultaService;
 
 import jakarta.persistence.Table;
@@ -28,13 +28,13 @@ public class ConsultaController {
     private ConsultaService service;
 
     @GetMapping
-    public List<ConsultaModel> listarTodos() {
+    public List<AgendarConsultaModel> listarTodos() {
         return service.ListarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaModel> buscarPorId(@PathVariable String id) {
-        ConsultaModel consulta = service.BuscarPorId(id);
+    public ResponseEntity<AgendarConsultaModel> buscarPorId(@PathVariable String id) {
+        AgendarConsultaModel consulta = service.BuscarPorId(id);
         if (consulta != null) {
             return ResponseEntity.ok(consulta);
         } else {
@@ -43,14 +43,14 @@ public class ConsultaController {
     }
 
     @PostMapping
-    public ConsultaModel salvar(ConsultaModel consulta) {
+    public AgendarConsultaModel salvar(AgendarConsultaModel consulta) {
         return service.Salvar(consulta);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultaModel> atualizar(@PathVariable String id, @RequestBody ConsultaModel consulta) {
+    public ResponseEntity<AgendarConsultaModel> atualizar(@PathVariable String id, @RequestBody AgendarConsultaModel consulta) {
         try{
-            ConsultaModel consultaAtualizada = service.Atualizar(id, consulta);
+            AgendarConsultaModel consultaAtualizada = service.Atualizar(id, consulta);
             return ResponseEntity.ok(consultaAtualizada);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();

@@ -1,6 +1,5 @@
 package com.API.clinicaMedica.Model;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -42,9 +41,4 @@ public class ExamesModel {
 
     @Column(nullable = false, length = 100)
     private String tipo_exame;
-
-    @Column(nullable = false, length = 255)
-    private String local_exame;
-
-   
 }

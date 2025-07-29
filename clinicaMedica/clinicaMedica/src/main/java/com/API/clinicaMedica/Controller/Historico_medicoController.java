@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.Historico_medicoModel;
+import com.API.clinicaMedica.Model.HistoricoMedicoPacienteModel;
 import com.API.clinicaMedica.Service.Historico_medicoService;
 
 import jakarta.persistence.Table;
@@ -28,12 +28,12 @@ public class Historico_medicoController {
     private Historico_medicoService service;
     
     @GetMapping
-    public List<Historico_medicoModel> listartodos(){
+    public List<HistoricoMedicoPacienteModel> listartodos(){
         return service.listartodos();
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Historico_medicoModel> buscarPorId(@PathVariable String id){
-        Historico_medicoModel historico_medico = service.BuscarPorId(id);
+    public ResponseEntity<HistoricoMedicoPacienteModel> buscarPorId(@PathVariable String id){
+        HistoricoMedicoPacienteModel historico_medico = service.BuscarPorId(id);
         if (historico_medico != null) {
             return ResponseEntity.ok(historico_medico);
         } else {
@@ -41,13 +41,13 @@ public class Historico_medicoController {
         }
     }   
     @PostMapping
-    public Historico_medicoModel salvar(Historico_medicoModel historico_medico){
+    public HistoricoMedicoPacienteModel salvar(HistoricoMedicoPacienteModel historico_medico){
         return service.Salvar(historico_medico);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Historico_medicoModel> Atualizar(@PathVariable String id, @RequestBody Historico_medicoModel historico_medico){
+    public ResponseEntity<HistoricoMedicoPacienteModel> Atualizar(@PathVariable String id, @RequestBody HistoricoMedicoPacienteModel historico_medico){
         try {
-            Historico_medicoModel historico_medicoAtualizado = service.Atualizar(id, historico_medico);
+            HistoricoMedicoPacienteModel historico_medicoAtualizado = service.Atualizar(id, historico_medico);
             return ResponseEntity.ok(historico_medicoAtualizado);
         } catch (RuntimeException e) {
            return ResponseEntity.notFound().build();

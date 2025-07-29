@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.API.clinicaMedica.Model.ConsultaModel;
+import com.API.clinicaMedica.Model.AgendarConsultaModel;
 import com.API.clinicaMedica.Repository.ConsultaRepository;
 
 
@@ -14,18 +14,18 @@ public class ConsultaService {
 
     private ConsultaRepository repository;
 
-     public ConsultaModel Salvar(ConsultaModel consulta) {
+     public AgendarConsultaModel Salvar(AgendarConsultaModel consulta) {
         return repository.save(consulta);
     }
 
 
-    public List<ConsultaModel> ListarTodos() {
+    public List<AgendarConsultaModel> ListarTodos() {
         return repository.findAll();
     }
 
     
-    public ConsultaModel BuscarPorId(String id) {
-        Optional<ConsultaModel> consulta = repository.findById(id);
+    public AgendarConsultaModel BuscarPorId(String id) {
+        Optional<AgendarConsultaModel> consulta = repository.findById(id);
         if (consulta.isPresent()) {
             return consulta.get();
         } else {
@@ -34,8 +34,8 @@ public class ConsultaService {
     }
        
 
-         public ConsultaModel Atualizar(String id, ConsultaModel consulta) {
-    ConsultaModel consultaExistente = repository.findById(id)
+         public AgendarConsultaModel Atualizar(String id, AgendarConsultaModel consulta) {
+    AgendarConsultaModel consultaExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Consulta não encontrada com o ID: " + id));
 
     consultaExistente.setHoraConsulta(consulta.getHoraConsulta());
