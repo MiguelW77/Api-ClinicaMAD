@@ -16,9 +16,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
-     @Autowired
+      @Autowired
     TokenService tokenService;
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -45,4 +46,4 @@ public class SecurityFilter extends OncePerRequestFilter {
 }
 
 
-}
+
