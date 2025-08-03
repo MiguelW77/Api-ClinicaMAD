@@ -36,12 +36,19 @@ public class UsuarioModel implements UserDetails {
     private String cpf;
     private String role; //MEDICO OU PACIENTE 
 
+
+   
     @OneToOne
     private MedicoModel medico;
 
     @OneToOne
     private PacienteModel paciente;
 
+     public UsuarioModel(String email, String senha, String role ){
+        this.email = email;
+        this.senha = senha;
+        this.role = role; 
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
