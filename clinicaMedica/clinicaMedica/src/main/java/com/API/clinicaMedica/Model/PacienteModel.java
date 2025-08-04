@@ -1,6 +1,8 @@
 package com.API.clinicaMedica.Model;
 import java.sql.Date;
 
+import com.API.clinicaMedica.User.Usuario;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import lombok.Setter;
 
 
 @NoArgsConstructor
-public class PacienteModel extends UsuarioModel {
+public class PacienteModel extends Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;

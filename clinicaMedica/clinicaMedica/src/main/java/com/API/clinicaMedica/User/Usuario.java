@@ -1,4 +1,4 @@
-package com.API.clinicaMedica.Model;
+package com.API.clinicaMedica.User;
 
 import java.util.Collection;
 import java.util.List;
@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.API.clinicaMedica.Model.MedicoModel;
+import com.API.clinicaMedica.Model.PacienteModel;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Table(name = "usuario")
-public class UsuarioModel implements UserDetails {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
@@ -44,7 +47,7 @@ public class UsuarioModel implements UserDetails {
     @OneToOne
     private PacienteModel paciente;
 
-     public UsuarioModel(String email, String senha, String role ){
+     public Usuario(String email, String senha, UserRole role ){
         this.email = email;
         this.senha = senha;
         this.role = role; 

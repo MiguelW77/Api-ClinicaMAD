@@ -1,6 +1,7 @@
 package com.API.clinicaMedica.Model;
 import java.util.List;
 
+import com.API.clinicaMedica.User.Usuario;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -19,7 +20,7 @@ import lombok.Setter;
 
 
 @NoArgsConstructor
-public class MedicoModel extends UsuarioModel {
+public class MedicoModel extends Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

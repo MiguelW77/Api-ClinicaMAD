@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.API.clinicaMedica.Model.UsuarioModel;
+import com.API.clinicaMedica.User.Usuario;
 
-public interface UsuarioRepository extends JpaRepository<UsuarioModel, String> {
-    Optional<UsuarioModel> findByEmail(String email);
+public interface UsuarioRepository extends JpaRepository<Usuario, String> {
+    Optional<Usuario> findByEmail(String email);
     
        
 }
