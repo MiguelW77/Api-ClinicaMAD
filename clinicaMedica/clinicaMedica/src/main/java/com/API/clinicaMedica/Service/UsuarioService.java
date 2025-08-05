@@ -5,8 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Model.PacienteModel;
-import com.API.clinicaMedica.Model.UsuarioModel;
 import com.API.clinicaMedica.Repository.UsuarioRepository;
+import com.API.clinicaMedica.User.Usuario;
 
 public class UsuarioService {
 
@@ -15,18 +15,18 @@ public class UsuarioService {
 
 
 public void cadastrarPaciente(PacienteModel paciente){
-    UsuarioModel user = new  UsuarioModel();
+    Usuario user = new  Usuario();
     user.setEmail(paciente.getEmail());
     user.setSenha(passwordEncoder.encode(paciente.getSenha()));
-    user.setRole("ROLE_PACIENTE");
+    
     user.setPaciente(paciente);
     usuarioRepository.save(user);
 }
 public void cadastrarMedico(MedicoModel medico){
-    UsuarioModel user = new UsuarioModel();
+    Usuario user = new Usuario();
     user.setCpf(medico.getCpf());
     user.setSenha(passwordEncoder.encode(medico.getSenha()));
-    user.setRole("ROLE_MEDICO");
+    user.setEmail(medico.getEmail());
     user.setMedico(medico);
     usuarioRepository.save(user);
     

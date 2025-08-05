@@ -4,15 +4,14 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import static org.springframework.security.config.Elements.JWT;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.API.clinicaMedica.User.Usuario;
+import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-
-import lombok.Value;
 
 @Service
 public class TokenService {
@@ -23,8 +22,8 @@ public class TokenService {
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()
-                    .withIssuer("auth-api")
-                    .withSubject(user.getLogin())
+                    .withIssuer("auth-vivasaudeApi")
+                    .withSubject(user.getEmail())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;
@@ -37,7 +36,7 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("auth-vivasaudeApi")
                     .build()
                     .verify(token)
                     .getSubject();

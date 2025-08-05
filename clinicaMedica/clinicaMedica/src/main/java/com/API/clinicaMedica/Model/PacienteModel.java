@@ -24,7 +24,7 @@ public class PacienteModel extends Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-    private String role = "PACIENTE";
+    
 
     @Column(nullable = false)
     private String nome;

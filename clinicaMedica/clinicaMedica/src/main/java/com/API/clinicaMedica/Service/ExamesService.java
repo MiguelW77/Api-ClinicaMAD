@@ -35,9 +35,8 @@ public class ExamesService {
         ExamesModel examesModelExistente = repository.findById(id)
         .orElseThrow(() -> new RuntimeException("Exames não encontrados por ID: " + id));
         examesModelExistente.setData_exame(exames.getData_exame());
-        examesModelExistente.setLocal_exame(exames.getLocal_exame());
         examesModelExistente.setTipo_exame(exames.getTipo_exame());
-        return repository.save(examesModelExistente);
+    return repository.save(examesModelExistente);
        }
        public void Deletar(String id){
          repository.deleteById(id);

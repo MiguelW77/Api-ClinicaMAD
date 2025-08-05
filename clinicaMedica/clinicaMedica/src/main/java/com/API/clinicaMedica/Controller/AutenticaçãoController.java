@@ -17,6 +17,8 @@ import com.API.clinicaMedica.DTOs.RegistroDTO;
 import com.API.clinicaMedica.DTOs.UsuarioDTO;
 import com.API.clinicaMedica.Repository.UsuarioRepository;
 import com.API.clinicaMedica.User.Usuario;
+import com.API.clinicaMedica.security.TokenService;
+import com.API.clinicaMedica.DTOs.LoginResponseDTO;
 
 import jakarta.validation.Valid;
 
@@ -29,7 +31,8 @@ public class AutenticaçãoController {
     private AuthenticationManager authenticationManager;
     @Autowired 
     private UsuarioRepository repositorio;
-    
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid UsuarioDTO data ){
@@ -38,8 +41,10 @@ public class AutenticaçãoController {
         data.email(),
         data.senha());
         var auth = this.authenticationManager.authenticate(usernamePassword); 
+        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+
         
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
     
     @PostMapping("/registro")
