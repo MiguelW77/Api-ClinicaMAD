@@ -14,37 +14,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.MedicoModel;
-import com.API.clinicaMedica.Service.MedicoService;
+import com.API.clinicaMedica.Model.HistoricoMedicoPacienteModel;
+import com.API.clinicaMedica.Service.HistoricoMedicoService;
 
 @RestController
-@RequestMapping("/medicos")
-@CrossOrigin(origins = "*")
-public class MedicoController {
+@CrossOrigin
+@RequestMapping("/historico-medico")
+public class HistoricoMedicoController {
 
     @Autowired
-    private MedicoService service;
+    private HistoricoMedicoService service;
 
     @GetMapping
-    public List<MedicoModel> listarTodos() {
+    public List<HistoricoMedicoPacienteModel> listarTodos() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MedicoModel> buscarPorId(@PathVariable Long id) {
-        MedicoModel medico = service.buscarPorId(id);
-        return medico != null ? ResponseEntity.ok(medico) : ResponseEntity.notFound().build();
+    public ResponseEntity<HistoricoMedicoPacienteModel> buscarPorId(@PathVariable Long id) {
+        HistoricoMedicoPacienteModel historico = service.buscarPorId(id);
+        return historico != null ? ResponseEntity.ok(historico) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<MedicoModel> salvar(@RequestBody MedicoModel medico) {
-        return ResponseEntity.ok(service.salvar(medico));
+    public ResponseEntity<HistoricoMedicoPacienteModel> salvar(@RequestBody HistoricoMedicoPacienteModel historico) {
+        return ResponseEntity.ok(service.salvar(historico));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MedicoModel> atualizar(@PathVariable Long id, @RequestBody MedicoModel medico) {
+    public ResponseEntity<HistoricoMedicoPacienteModel> atualizar(@PathVariable Long id, @RequestBody HistoricoMedicoPacienteModel historico) {
         try {
-            return ResponseEntity.ok(service.atualizar(id, medico));
+            return ResponseEntity.ok(service.atualizar(id, historico));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

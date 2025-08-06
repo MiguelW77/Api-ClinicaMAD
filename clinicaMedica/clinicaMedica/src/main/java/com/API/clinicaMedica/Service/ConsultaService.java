@@ -1,52 +1,45 @@
 package com.API.clinicaMedica.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.API.clinicaMedica.Model.AgendarConsultaModel;
+import com.API.clinicaMedica.Model.ConsultaModel;
 import com.API.clinicaMedica.Repository.ConsultaRepository;
-
 
 @Service
 public class ConsultaService {
 
+    @Autowired
     private ConsultaRepository repository;
 
-     public AgendarConsultaModel Salvar(AgendarConsultaModel consulta) {
+    public ConsultaModel salvar(ConsultaModel consulta) {
         return repository.save(consulta);
     }
 
-
-    public List<AgendarConsultaModel> ListarTodos() {
+    public List<ConsultaModel> listarTodos() {
         return repository.findAll();
     }
 
-    
-    public AgendarConsultaModel BuscarPorId(String id) {
-        Optional<AgendarConsultaModel> consulta = repository.findById(id);
-        if (consulta.isPresent()) {
-            return consulta.get();
-        } else {
-            return null;
-        }
+    public ConsultaModel buscarPorId(Long id) {
+        return repository.findById(id).orElse(null);
     }
-       
 
-         public AgendarConsultaModel Atualizar(String id, AgendarConsultaModel consulta) {
-    AgendarConsultaModel consultaExistente = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Consulta não encontrada com o ID: " + id));
+    public ConsultaModel atualizar(Long id, ConsultaModel consulta) {
+        ConsultaModel existente = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Consulta não encontrada com ID: " + id));
 
-    consultaExistente.setHoraConsulta(consulta.getHoraConsulta());
-    consultaExistente.setDataConsulta(consulta.getDataConsulta());
+        existente.setDataConsulta(consulta.getDataConsulta());
+        existente.setHoraConsulta(consulta.getHoraConsulta());
+        existente.setConsulta(consulta.getConsulta());
+        existente.setEspecialidade(consulta.getEspecialidade());
+        existente.setStatusConsulta(consulta.getStatusConsulta());
 
-            return repository.save(consultaExistente);
-    
-  }
+        return repository.save(existente);
+    }
 
-    public void Deletar(String id) {
+    public void deletar(Long id) {
         repository.deleteById(id);
     }
-    
 }

@@ -18,51 +18,45 @@ import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Service.PacienteService;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/pacientes")
+@CrossOrigin(origins = "*")
 public class PacienteController {
 
-     @Autowired
+    @Autowired
     private PacienteService service;
 
     @GetMapping
     public List<PacienteModel> listarTodos() {
-        return service.ListarTodos();
+        return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PacienteModel> buscarPorId(@PathVariable String id) {
-        PacienteModel paciente = service.BuscarPorId(id);
-        if (paciente != null) {
-            return ResponseEntity.ok(paciente);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PacienteModel> buscarPorId(@PathVariable Long id) {
+        PacienteModel paciente = service.buscarPorId(id);
+        return paciente != null ? ResponseEntity.ok(paciente) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
     public PacienteModel salvar(@RequestBody PacienteModel paciente) {
-        return service.Salvar(paciente);
+        return service.salvar(paciente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteModel> atualizar(@PathVariable String id, @RequestBody PacienteModel paciente) {
-        try{
-            PacienteModel pacienteAtualizado = service.Atualizar(id, paciente);
-            return ResponseEntity.ok(pacienteAtualizado);
+    public ResponseEntity<PacienteModel> atualizar(@PathVariable Long id, @RequestBody PacienteModel paciente) {
+        try {
+            return ResponseEntity.ok(service.atualizar(id, paciente));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
-            service.Deletar(id);
+            service.deletar(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
-    
 }

@@ -14,57 +14,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.AgendarConsultaModel;
+import com.API.clinicaMedica.Model.ConsultaModel;
 import com.API.clinicaMedica.Service.ConsultaService;
-
-import jakarta.persistence.Table;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/consultas")   
-@Table(name = "consulta")
+@RequestMapping("/consultas")
 public class ConsultaController {
+
     @Autowired
     private ConsultaService service;
 
     @GetMapping
-    public List<AgendarConsultaModel> listarTodos() {
-        return service.ListarTodos();
+    public List<ConsultaModel> listarTodos() {
+        return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AgendarConsultaModel> buscarPorId(@PathVariable String id) {
-        AgendarConsultaModel consulta = service.BuscarPorId(id);
-        if (consulta != null) {
-            return ResponseEntity.ok(consulta);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ConsultaModel> buscarPorId(@PathVariable Long id) {
+        ConsultaModel consulta = service.buscarPorId(id);
+        return consulta != null ? ResponseEntity.ok(consulta) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public AgendarConsultaModel salvar(AgendarConsultaModel consulta) {
-        return service.Salvar(consulta);
+    public ResponseEntity<ConsultaModel> salvar(@RequestBody ConsultaModel consulta) {
+        return ResponseEntity.ok(service.salvar(consulta));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AgendarConsultaModel> atualizar(@PathVariable String id, @RequestBody AgendarConsultaModel consulta) {
-        try{
-            AgendarConsultaModel consultaAtualizada = service.Atualizar(id, consulta);
-            return ResponseEntity.ok(consultaAtualizada);
+    public ResponseEntity<ConsultaModel> atualizar(@PathVariable Long id, @RequestBody ConsultaModel consulta) {
+        try {
+            return ResponseEntity.ok(service.atualizar(id, consulta));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable String id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
-            service.Deletar(id);
+            service.deletar(id);
             return ResponseEntity.noContent().build();
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
-    
 }
