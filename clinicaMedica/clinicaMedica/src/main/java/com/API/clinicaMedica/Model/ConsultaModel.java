@@ -2,8 +2,6 @@ package com.API.clinicaMedica.Model;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,30 +14,37 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "exames")
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExamesModel {
+@Entity
+@Table(name = "consulta")
+public class ConsultaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private LocalDate dataConsulta;
+
+      @Column(nullable = false)
+    private LocalDate horaConsulta;
+
+    @Column(nullable = false, length = 500)
+    private String consulta;
+
+    @Column(nullable = false, length = 50)
+    private String especialidade;
+
+    @Column(nullable = false, length = 50)
+    private String statusConsulta;
+
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
     private PacienteModel paciente;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
     private MedicoModel medico;
-
-    @Column(name = "data_exame", nullable = false)
-    private LocalDate dataExame;
-
-    @Column(name = "tipo_exame", nullable = false, length = 100)
-    private String tipoExame;
 }

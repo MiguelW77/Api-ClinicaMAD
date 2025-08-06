@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.API.clinicaMedica.DTOs.LoginResponseDTO;
 import com.API.clinicaMedica.DTOs.RegistroDTO;
 import com.API.clinicaMedica.DTOs.UsuarioDTO;
 import com.API.clinicaMedica.Repository.UsuarioRepository;
 import com.API.clinicaMedica.User.Usuario;
 import com.API.clinicaMedica.security.TokenService;
-import com.API.clinicaMedica.DTOs.LoginResponseDTO;
 
 import jakarta.validation.Valid;
 

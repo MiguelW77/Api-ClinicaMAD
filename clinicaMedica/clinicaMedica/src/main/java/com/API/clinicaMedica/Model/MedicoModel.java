@@ -1,37 +1,35 @@
 package com.API.clinicaMedica.Model;
+
 import java.util.List;
 
-import com.API.clinicaMedica.User.Usuario;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import  jakarta.persistence.Id;
+import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
 @Getter
 @Setter
-
-
-
 @NoArgsConstructor
-public class MedicoModel extends Usuario {
+@Table(name = "medico")
+public class MedicoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
-
-    
+    private Long id; // Corrigido para Long, pois usa @GeneratedValue
 
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 11 , unique = true)
+    @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 50)
@@ -55,16 +53,16 @@ public class MedicoModel extends Usuario {
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
     private List<AgendarConsultaModel> consultas;
-    
-    @OneToMany(mappedBy= "medico")
+
+    @OneToMany(mappedBy = "medico")
     @JsonManagedReference
     private List<ExamesModel> exames;
-    
+
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
     private List<ProntuarioModel> prontuarios;
 
     @OneToMany(mappedBy = "medico")
     @JsonManagedReference
-    private List<PacienteModel> pacientes;
+    private List<PacienteModel> pacientes; // Essa relação agora está correta
 }

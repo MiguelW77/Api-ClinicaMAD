@@ -14,16 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Service.PacienteService;
-
-import jakarta.persistence.Table;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/pacientes")
-@Table(name = "paciente")
 public class PacienteController {
 
      @Autowired

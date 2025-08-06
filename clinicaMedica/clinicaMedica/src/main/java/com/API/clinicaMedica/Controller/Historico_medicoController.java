@@ -17,12 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.API.clinicaMedica.Model.HistoricoMedicoPacienteModel;
 import com.API.clinicaMedica.Service.Historico_medicoService;
 
-import jakarta.persistence.Table;
-
 @RestController
 @CrossOrigin
 @RequestMapping("/historico-medico")
-@Table(name = "historico_medico")
 public class Historico_medicoController {
     @Autowired
     private Historico_medicoService service;
@@ -44,6 +41,7 @@ public class Historico_medicoController {
     public HistoricoMedicoPacienteModel salvar(HistoricoMedicoPacienteModel historico_medico){
         return service.Salvar(historico_medico);
     }
+    
     @PutMapping("/{id}")
     public ResponseEntity<HistoricoMedicoPacienteModel> Atualizar(@PathVariable String id, @RequestBody HistoricoMedicoPacienteModel historico_medico){
         try {

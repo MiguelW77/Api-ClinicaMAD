@@ -9,13 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Model.PacienteModel;
-import com.API.clinicaMedica.User.UserRole;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,9 +45,7 @@ public class Usuario implements UserDetails {
     
     @Enumerated(EnumType.STRING)
     private UserRole role;
-
-
-   
+    
     @OneToOne
     private MedicoModel medico;
 
@@ -75,7 +71,5 @@ public class Usuario implements UserDetails {
     public String getUsername() {
         return email != null ? email : cpf;
     }
-
-    
 
 }

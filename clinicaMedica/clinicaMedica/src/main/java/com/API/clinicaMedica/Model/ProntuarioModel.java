@@ -1,7 +1,5 @@
 package com.API.clinicaMedica.Model;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
@@ -12,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,15 +21,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ProntuarioModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(nullable = false, length = 500)
-    private String nome_medico;
+    private String nomeMedico;
 
     @Column(nullable = false, length = 15)
-    private String crm_medico;
+    private String crmMedico;
 
     @Column(nullable = false, length = 500)
     private String sintomas;
@@ -40,14 +38,12 @@ public class ProntuarioModel {
     @Column(nullable = false, length = 500)
     private String diagnostico;
 
-    @Column(nullable = false)
     @Lob
+    @Column(nullable = false)
     private String prescricao;
 
     @ManyToOne
+    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
     @JsonBackReference
-    @JoinColumn(name = "id_medico" , referencedColumnName = "id", nullable = false)
     private MedicoModel medico;
-
-
 }

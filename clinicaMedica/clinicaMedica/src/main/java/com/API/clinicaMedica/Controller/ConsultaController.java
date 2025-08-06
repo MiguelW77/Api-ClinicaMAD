@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/consultas")
+@RequestMapping("/consultas")   
 @Table(name = "consulta")
 public class ConsultaController {
     @Autowired

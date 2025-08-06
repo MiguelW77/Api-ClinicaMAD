@@ -26,8 +26,7 @@ import lombok.Setter;
 public class AgendarConsultaModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    private String id;
+    private Long id;
    
     @Column(nullable = false)
     private LocalDate dataConsulta;
@@ -53,6 +52,7 @@ public class AgendarConsultaModel {
 
     @Column(nullable = false, length = 50)
     private String statusConsulta;
+    
     @Column(nullable = false, length = 50)
     private String convenio;
 

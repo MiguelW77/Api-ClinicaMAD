@@ -1,6 +1,6 @@
 package com.API.clinicaMedica.Model;
 
-import java.time.DateTimeException;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -23,17 +23,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class HistoricoMedicoPacienteModel {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-   private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-   @ManyToOne
-   @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
-   private PacienteModel paciente;
+    @ManyToOne
+    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    private PacienteModel paciente;
 
     @Column(nullable = false)
-    private DateTimeException dataConsulta;
+    private LocalDate dataConsulta;
 
     @Column(nullable = false, length = 255)
     private String procedimento;
@@ -43,16 +43,14 @@ public class HistoricoMedicoPacienteModel {
     private String diagnostico;
 
     @Column(nullable = false, length = 50)
-    private String especialidade_medico;
-    
+    private String especialidadeMedico;
+
     @Column(nullable = false)
     @Lob
     private String prescricao;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    @JsonBackReference
     private MedicoModel medico;
-
-
 }
