@@ -17,8 +17,8 @@ public class ExamesDTO {
     public ExamesDTO(ExamesModel model){
         this.nomePaciente = model.getPaciente().getNome();
         this.nomeMedico = model.getMedico().getNome();
-        this.dataExame = model.getData_exame();
-        this.tipoExame = model.getTipo_exame();
+        this.dataExame = model.getDataExame();
+        this.tipoExame = model.getTipoExame();
     }
 
 

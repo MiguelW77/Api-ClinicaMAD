@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.API.clinicaMedica.Model.HistoricoMedicoPacienteModel;
 @Repository
-public interface Historico_medicoRepository extends JpaRepository<HistoricoMedicoPacienteModel, String>{
+public interface Historico_medicoRepository extends JpaRepository<HistoricoMedicoPacienteModel, Long>{
     
 }
