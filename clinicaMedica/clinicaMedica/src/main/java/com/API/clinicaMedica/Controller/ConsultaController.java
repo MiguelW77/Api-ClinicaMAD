@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.ConsultaModel;
+import com.API.clinicaMedica.Model.AgendarConsultaModel;
+
 import com.API.clinicaMedica.Service.ConsultaService;
 
 @RestController
@@ -26,23 +27,23 @@ public class ConsultaController {
     private ConsultaService service;
 
     @GetMapping
-    public List<ConsultaModel> listarTodos() {
+    public List<AgendarConsultaModel> listarTodos() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConsultaModel> buscarPorId(@PathVariable Long id) {
-        ConsultaModel consulta = service.buscarPorId(id);
+    public ResponseEntity<AgendarConsultaModel> buscarPorId(@PathVariable Long id) {
+        AgendarConsultaModel consulta = service.buscarPorId(id);
         return consulta != null ? ResponseEntity.ok(consulta) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping
-    public ResponseEntity<ConsultaModel> salvar(@RequestBody ConsultaModel consulta) {
+    @PostMapping("/consultas")
+    public ResponseEntity<AgendarConsultaModel> salvar(@RequestBody AgendarConsultaModel consulta) {
         return ResponseEntity.ok(service.salvar(consulta));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConsultaModel> atualizar(@PathVariable Long id, @RequestBody ConsultaModel consulta) {
+    public ResponseEntity<AgendarConsultaModel> atualizar(@PathVariable Long id, @RequestBody AgendarConsultaModel consulta) {
         try {
             return ResponseEntity.ok(service.atualizar(id, consulta));
         } catch (RuntimeException e) {

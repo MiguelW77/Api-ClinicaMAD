@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -29,19 +29,19 @@ public class AgendarConsultaModel {
     private Long id;
 
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataConsulta;
 
     @ManyToOne
     @JsonBackReference(value = "paciente-agendarconsulta")  // Aqui paciente é referência BACK para medico
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
-    private PacienteModel paciente;
+    private Long pacienteId;
 
     @ManyToOne
     @JsonBackReference(value = "medico-consulta")  // Medico é referência BACK para paciente
-    @JoinColumn(name = "id_medico", referencedColumnName = "id")
-    private MedicoModel medico;
+    private Long medicoId;
 
     @Column(nullable = false)
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horaConsulta;
 
     @Column(nullable = false, length = 500)
@@ -49,9 +49,6 @@ public class AgendarConsultaModel {
 
     @Column(nullable = false, length = 50)
     private String especialidade;
-
-    @Column(nullable = false, length = 50)
-    private String statusConsulta;
 
     @Column(nullable = false, length = 50)
     private String convenio;

@@ -66,8 +66,8 @@ public class PacienteModel {
     private MedicoModel medico;
 
     @OneToMany(mappedBy = "paciente")
-    @JsonManagedReference(value = "paciente-consulta")  // Paciente tem consultas
-    private List<ConsultaModel> consulta;
+    @JsonManagedReference(value = "paciente-agendarconsulta")  // Paciente tem consultas
+    private List<AgendarConsultaModel> consulta;
 
     @OneToMany(mappedBy = "paciente")
     @JsonManagedReference(value = "paciente-agendarconsulta")
