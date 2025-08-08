@@ -33,12 +33,12 @@ public class AgendarConsultaModel {
 
     @ManyToOne
     @JsonBackReference(value = "paciente-agendarconsulta")  // Aqui paciente é referência BACK para medico
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
     private PacienteModel paciente;
 
     @ManyToOne
     @JsonBackReference(value = "medico-consulta")  // Medico é referência BACK para paciente
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_medico", referencedColumnName = "id")
     private MedicoModel medico;
 
     @Column(nullable = false)

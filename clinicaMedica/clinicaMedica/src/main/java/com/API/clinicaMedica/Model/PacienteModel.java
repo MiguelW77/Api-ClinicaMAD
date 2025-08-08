@@ -33,10 +33,10 @@ public class PacienteModel {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 11, unique = true)
+    @Column(nullable = false, length = 14, unique = true)
     private String cpf;
 
-    @Column(length = 15)
+    @Column(length = 20)
     private String telefone;
 
     @Column(nullable = false, length = 50)

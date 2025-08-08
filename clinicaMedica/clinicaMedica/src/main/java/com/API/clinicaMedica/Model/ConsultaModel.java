@@ -45,11 +45,11 @@ public class ConsultaModel {
 
     @ManyToOne
     @JsonBackReference(value = "paciente-consulta")
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_paciente", referencedColumnName = "id")
     private PacienteModel paciente;
 
     @ManyToOne
     @JsonBackReference(value = "medico-consulta")
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_medico", referencedColumnName = "id")
     private MedicoModel medico;
 }
