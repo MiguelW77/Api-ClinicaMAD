@@ -30,18 +30,18 @@ public class PacienteController {
         return service.listarTodos();
     }
 
-    @GetMapping("/usuario")
+    @GetMapping("/pacientes")
     public ResponseEntity<PacienteModel> buscarPorId(@PathVariable Long id) {
         PacienteModel paciente = service.buscarPorId(id);
         return paciente != null ? ResponseEntity.ok(paciente) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json", produces = "application/json")
     public PacienteModel salvar(@RequestBody PacienteModel paciente) {
         return service.salvar(paciente);
     }
 
-    @PutMapping("/usuario")
+    @PutMapping("/pacientes")
     public ResponseEntity<PacienteModel> atualizar(@PathVariable Long id, @RequestBody PacienteModel paciente) {
         try {
             return ResponseEntity.ok(service.atualizar(id, paciente));

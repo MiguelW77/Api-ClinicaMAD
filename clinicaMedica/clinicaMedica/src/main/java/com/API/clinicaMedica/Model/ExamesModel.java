@@ -28,18 +28,19 @@ public class ExamesModel {
     private Long id;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    @JsonBackReference(value = "paciente-exame")
+    @JoinColumn(name = "id_paciente")
     private PacienteModel paciente;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
+    @JsonBackReference(value = "medico-exame")
+    @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 
-    @Column(name = "data_exame", nullable = false)
+    @Column(nullable = false)
     private LocalDate dataExame;
 
-    @Column(name = "tipo_exame", nullable = false, length = 100)
+    @Column(nullable = false, length = 100)
     private String tipoExame;
 }
+

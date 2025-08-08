@@ -24,7 +24,7 @@ public class MedicoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Corrigido para Long, pois usa @GeneratedValue
+    private Long id;
 
     @Column(nullable = false)
     private String nome;
@@ -35,34 +35,34 @@ public class MedicoModel {
     @Column(nullable = false, length = 50)
     private String especialidade;
 
-    @Column(length = 15, nullable = false)
+    @Column(nullable = false, length = 15)
     private String crm;
 
-    @Column(length = 15, nullable = false)
+    @Column(nullable = false, length = 15)
     private String telefone;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(length = 100, nullable = false)
+    @Column(nullable = false, length = 100)
     private String senha;
 
     @Column(nullable = false)
     private String termos;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference
+    @JsonManagedReference(value = "medico-consulta")  // Médico tem consultas
     private List<AgendarConsultaModel> consultas;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference
+    @JsonManagedReference(value = "medico-exame")
     private List<ExamesModel> exames;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference
+    @JsonManagedReference(value = "medico-prontuario")
     private List<ProntuarioModel> prontuarios;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference
-    private List<PacienteModel> pacientes; // Essa relação agora está correta
+    @JsonManagedReference(value = "medico-paciente")  // Médico tem pacientes
+    private List<PacienteModel> pacientes;
 }

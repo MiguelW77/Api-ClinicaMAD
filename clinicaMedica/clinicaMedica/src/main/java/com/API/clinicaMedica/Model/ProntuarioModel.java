@@ -43,7 +43,7 @@ public class ProntuarioModel {
     private String prescricao;
 
     @ManyToOne
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "medico-prontuario")
+    @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 }

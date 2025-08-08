@@ -1,6 +1,10 @@
 package com.API.clinicaMedica.Model;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +36,7 @@ public class PacienteModel {
     @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
-    @Column(nullable = true, length = 15)
+    @Column(length = 15)
     private String telefone;
 
     @Column(nullable = false, length = 50)
@@ -49,14 +54,31 @@ public class PacienteModel {
     @Column(nullable = false, length = 50)
     private String genero;
 
-    @Column(nullable = true, length = 250)
+    @Column(length = 250)
     private String endereco;
 
-    @Column(nullable = true, length = 15)
+    @Column(length = 15)
     private String cep;
 
-    // Médico responsável, se necessário
     @ManyToOne
-    @JoinColumn(name = "medico_id")
+    @JsonBackReference(value = "medico-paciente")  // Paciente tem 1 médico (voltar para médico)
+    @JoinColumn(name = "id_medico")
     private MedicoModel medico;
+
+    @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference(value = "paciente-consulta")  // Paciente tem consultas
+    private List<ConsultaModel> consulta;
+
+    @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference(value = "paciente-agendarconsulta")
+    private List<AgendarConsultaModel> agendconsult;
+
+    @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference(value = "paciente-exame")
+    private List<ExamesModel> exame;
+
+    @OneToMany(mappedBy = "paciente")
+    @JsonManagedReference(value = "paciente-historico")
+    private List<HistoricoMedicoPacienteModel> histpaciente;
 }
+

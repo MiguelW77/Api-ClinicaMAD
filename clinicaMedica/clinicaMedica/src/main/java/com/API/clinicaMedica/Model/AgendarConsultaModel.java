@@ -17,27 +17,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-
 @Entity
 @Table(name = "consulta")
+@Getter
+@Setter
 @NoArgsConstructor
 public class AgendarConsultaModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   
+
     @Column(nullable = false)
     private LocalDate dataConsulta;
-   
+
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "paciente-agendarconsulta")  // Aqui paciente é referência BACK para medico
     @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
     private PacienteModel paciente;
-    
+
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "medico-consulta")  // Medico é referência BACK para paciente
     @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
     private MedicoModel medico;
 
@@ -52,8 +52,7 @@ public class AgendarConsultaModel {
 
     @Column(nullable = false, length = 50)
     private String statusConsulta;
-    
+
     @Column(nullable = false, length = 50)
     private String convenio;
-
 }

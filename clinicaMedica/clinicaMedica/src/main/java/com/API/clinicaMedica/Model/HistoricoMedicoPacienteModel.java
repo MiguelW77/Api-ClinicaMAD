@@ -29,7 +29,8 @@ public class HistoricoMedicoPacienteModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    @JsonBackReference(value = "paciente-historico")
+    @JoinColumn(name = "id_paciente")
     private PacienteModel paciente;
 
     @Column(nullable = false)
@@ -50,7 +51,7 @@ public class HistoricoMedicoPacienteModel {
     private String prescricao;
 
     @ManyToOne
-    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference(value = "medico-historico")
+    @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 }
