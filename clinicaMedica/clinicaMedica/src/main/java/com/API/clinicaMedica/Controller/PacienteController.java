@@ -30,7 +30,7 @@ public class PacienteController {
         return service.listarTodos();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/usuario")
     public ResponseEntity<PacienteModel> buscarPorId(@PathVariable Long id) {
         PacienteModel paciente = service.buscarPorId(id);
         return paciente != null ? ResponseEntity.ok(paciente) : ResponseEntity.notFound().build();
@@ -41,7 +41,7 @@ public class PacienteController {
         return service.salvar(paciente);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/usuario")
     public ResponseEntity<PacienteModel> atualizar(@PathVariable Long id, @RequestBody PacienteModel paciente) {
         try {
             return ResponseEntity.ok(service.atualizar(id, paciente));
@@ -50,7 +50,7 @@ public class PacienteController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/usuario")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
             service.deletar(id);
