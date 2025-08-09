@@ -3,8 +3,6 @@ package com.API.clinicaMedica.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.API.clinicaMedica.Model.PacienteModel;
-import com.API.clinicaMedica.Repository.PacienteRepository;
 import com.API.clinicaMedica.Service.PacienteService;
 
 @RestController
@@ -27,8 +24,6 @@ public class PacienteController {
 
     @Autowired
     private PacienteService service;
-    @Autowired
-    private PacienteRepository pacienteRepository;
 
     @GetMapping
     public List<PacienteModel> listarTodos() {
