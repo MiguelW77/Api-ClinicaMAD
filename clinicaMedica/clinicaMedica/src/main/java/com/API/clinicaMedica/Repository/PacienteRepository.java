@@ -7,5 +7,5 @@ import com.API.clinicaMedica.Model.PacienteModel;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<PacienteModel, Long> {
-    // Você pode adicionar métodos personalizados aqui, se necessário
+   PacienteModel findByEmailAndSenha(String email, String senha);
 }

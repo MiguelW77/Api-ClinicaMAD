@@ -7,5 +7,5 @@ import com.API.clinicaMedica.Model.MedicoModel;
 
 @Repository
 public interface MedicoRepository extends JpaRepository<MedicoModel, Long> {
-    // Adicione métodos customizados se necessário no futuro
+     MedicoModel findByEmailAndSenha(String email, String senha);
 }
