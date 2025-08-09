@@ -2,9 +2,13 @@ package com.API.clinicaMedica.Service;
 
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.API.clinicaMedica.DTO.LoginRequest;
 import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Repository.MedicoRepository;
 
@@ -13,6 +17,12 @@ public class MedicoService {
 
     @Autowired
     private MedicoRepository repository;
+
+    public ResponseEntity<?> login(LoginRequest loginRequest){
+        return repository.findByEmailAndSenha(loginRequest.getEmail(), loginRequest.getSenha())
+        .map(user -> ResponseEntity.ok(user))
+        .orElseThrow(() -> new RuntimeException("Login falhou."));
+        }
 
     public MedicoModel salvar(MedicoModel medico) {
         return repository.save(medico);

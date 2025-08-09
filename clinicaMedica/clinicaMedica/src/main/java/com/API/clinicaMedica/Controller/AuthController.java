@@ -13,6 +13,8 @@ import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Repository.MedicoRepository;
 import com.API.clinicaMedica.Repository.PacienteRepository;
+import com.API.clinicaMedica.Service.MedicoService;
+import com.API.clinicaMedica.Service.PacienteService;
 
 
 @RestController
@@ -21,33 +23,23 @@ import com.API.clinicaMedica.Repository.PacienteRepository;
 public class AuthController {
 
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private PacienteService pacienteService;
 
     @Autowired
-    private MedicoRepository medicoRepository;
+    private MedicoService medicoService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        // Verifica paciente
-        PacienteModel paciente = pacienteRepository.findByEmailAndSenha(
-                loginRequest.getEmail(), loginRequest.getSenha());
+       String tipo = loginRequest.getTipo();
+       if("medico".equalsIgnoreCase(tipo)){
+        return medicoService.login(loginRequest);
+       }else if ("paciente".equalsIgnoreCase(tipo)){
+        return pacienteService.login(loginRequest);
 
-        if (paciente != null) {
-            paciente.setSenha(null); // Remove senha antes de retornar
-            return ResponseEntity.ok(paciente);
-        }
-
-        // Verifica médico
-        MedicoModel medico = medicoRepository.findByEmailAndSenha(
-                loginRequest.getEmail(), loginRequest.getSenha());
-
-        if (medico != null) {
-            medico.setSenha(null); 
-            return ResponseEntity.ok(medico);
-        }
-
-       
-        return ResponseEntity.status(401).body("Email ou senha inválidos");
+       }else{
+        return ResponseEntity.badRequest().body("Tipo inválido");
+       }
+        
     }
 }
 
