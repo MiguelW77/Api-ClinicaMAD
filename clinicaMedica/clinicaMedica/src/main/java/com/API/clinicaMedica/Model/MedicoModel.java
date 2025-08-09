@@ -29,16 +29,16 @@ public class MedicoModel {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, length = 11, unique = true)
+    @Column(nullable = false, length = 15, unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 50)
     private String especialidade;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 20)
     private String crm;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 20)
     private String telefone;
 
     @Column(nullable = false, length = 100)
