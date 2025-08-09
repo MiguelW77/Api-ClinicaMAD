@@ -36,10 +36,11 @@ public class PacienteController {
         return paciente != null ? ResponseEntity.ok(paciente) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping
     public PacienteModel salvar(@RequestBody PacienteModel paciente) {
         return service.salvar(paciente);
     }
+     
 
     @PutMapping("/editar-infos")
     public ResponseEntity<PacienteModel> atualizar(@PathVariable Long id, @RequestBody PacienteModel paciente) {

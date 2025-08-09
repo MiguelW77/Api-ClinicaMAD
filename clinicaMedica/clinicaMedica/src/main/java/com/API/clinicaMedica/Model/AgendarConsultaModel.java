@@ -34,11 +34,11 @@ public class AgendarConsultaModel {
 
     @ManyToOne
     @JsonBackReference(value = "paciente-agendarconsulta")  // Aqui paciente é referência BACK para medico
-    private Long pacienteId;
+    private PacienteModel paciente;
 
     @ManyToOne
     @JsonBackReference(value = "medico-consulta")  // Medico é referência BACK para paciente
-    private Long medicoId;
+    private MedicoModel medico;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm:ss")
