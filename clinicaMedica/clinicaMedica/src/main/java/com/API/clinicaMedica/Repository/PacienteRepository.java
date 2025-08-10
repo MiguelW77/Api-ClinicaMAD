@@ -10,5 +10,4 @@ import com.API.clinicaMedica.Model.PacienteModel;
 @Repository
 public interface PacienteRepository extends JpaRepository<PacienteModel, Long> {
    Optional<PacienteModel> findByEmailAndSenha(String email, String senha);
-   Optional<PacienteModel> findById(Long Id);
 }

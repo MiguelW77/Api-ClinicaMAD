@@ -1,14 +1,13 @@
 package com.API.clinicaMedica.Service;
 
 import java.util.List;
-
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
-import com.API.clinicaMedica.DTO.LoginRequest;
+
 import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Repository.PacienteRepository;
 
@@ -18,11 +17,8 @@ public class PacienteService {
     @Autowired
     private PacienteRepository repository;
 
-    public ResponseEntity<?> login(LoginRequest LoginRequest){
-        return repository.findByEmailAndSenha(LoginRequest.getEmail() ,LoginRequest.getSenha())
-        .map(user -> ResponseEntity.ok(user))
-        .orElseThrow(() -> new RuntimeException("Login falhou"));
-        
+    public Optional<PacienteModel> login(String email, String senha){
+        return repository.findByEmailAndSenha(email,senha);
     }
 
     public PacienteModel salvar(PacienteModel paciente) {
