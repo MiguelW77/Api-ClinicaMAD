@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -48,6 +49,8 @@ public class SecurityConfig {
                 // liberar endpoints públicos (login, assets, documentação)
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/pacientes").permitAll()
+                .requestMatchers("/medicos").permitAll()
                 // permitir preflight OPTIONS (normalmente já coberto, mas explícito é ok)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // o resto exige autenticação
@@ -55,6 +58,7 @@ public class SecurityConfig {
             )
             // você pode ativar httpBasic apenas temporariamente para debug, NÃO necessário para sessão:
             .httpBasic(Customizer.withDefaults());
+            
 
         return http.build();
     }
