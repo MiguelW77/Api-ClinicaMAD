@@ -47,17 +47,18 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(auth -> auth
                 // liberar endpoints públicos (login, assets, documentação)
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/public/**").permitAll()
-                .requestMatchers("/pacientes").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/auth/me").authenticated()
+                .requestMatchers("/pacientes/**").permitAll()
                 .requestMatchers("/medicos").permitAll()
                 // permitir preflight OPTIONS (normalmente já coberto, mas explícito é ok)
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // o resto exige autenticação
                 .anyRequest().authenticated()
-            )
+                           
+                );
             // você pode ativar httpBasic apenas temporariamente para debug, NÃO necessário para sessão:
-            .httpBasic(Customizer.withDefaults());
+            http.httpBasic(AbstractHttpConfigurer::disable); 
             
 
         return http.build();

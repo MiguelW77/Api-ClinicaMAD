@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +27,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 @SessionAttributes({"usuarioLogado", "tipoUsuario"})
 
 public class AuthController {
@@ -46,10 +48,14 @@ public class AuthController {
        if("medico".equalsIgnoreCase(tipo)){
         Optional<MedicoModel> optMedico = medicoService.login(loginRequest.getEmail(), loginRequest.getSenha());
         if(optMedico.isPresent()){
-            MedicoModel medico = optMedico.get();
-            session.setAttribute("usuarioLogado", medico);
+             
+            session.setAttribute("usuarioLogado",optMedico.get());
             session.setAttribute("tipoUsuario", "medico");
-            return ResponseEntity.ok(medico);   
+            UsernamePasswordAuthenticationToken authToken = 
+            new UsernamePasswordAuthenticationToken(tipo, optMedico);
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+            System.out.print("Sessão usuário médico iniciada!");
+            return ResponseEntity.ok(optMedico.get());   
         } else{
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body("Email ou senha inválidos para médico");
@@ -58,10 +64,14 @@ public class AuthController {
     else if ("paciente".equalsIgnoreCase(tipo)){
         Optional<PacienteModel> optPaciente = pacienteService.login(loginRequest.getEmail(), loginRequest.getSenha());
         if(optPaciente.isPresent()){
-            PacienteModel paciente = optPaciente.get();
-            session.setAttribute("usuarioLogado", paciente);
+            
+            session.setAttribute("usuarioLogado", optPaciente.get());
             session.setAttribute("tipoUsuario","paciente");
-            return ResponseEntity.ok(paciente);
+            UsernamePasswordAuthenticationToken authToken = 
+            new UsernamePasswordAuthenticationToken(tipo, optPaciente);
+            SecurityContextHolder.getContext().setAuthentication(authToken);
+            System.out.print("Sessão usuário paciente inciada!");
+            return ResponseEntity.ok(optPaciente.get());
         }
         }else{
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
@@ -76,9 +86,10 @@ public class AuthController {
     
     @GetMapping("/me")
     public ResponseEntity<?> usuarioLogado(HttpSession session){
-        Long usuarioId = (Long) session.getAttribute("usuarioID");
+        Long usuarioId = (Long) session.getAttribute("usuarioLogado");
         String tipoUsuario = (String) session.getAttribute("tipoUsuario");
         if(usuarioId == null || tipoUsuario == null){
+            System.out.print("Nenhum usuário logado!");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nenhum usuário logado!");
         }
         if("medico".equals(tipoUsuario)){
