@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -30,26 +31,29 @@ public class AgendarConsultaModel {
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate dataConsulta;
+    private LocalDate dataConsulta;  // REMOVE @JoinColumn daqui!
 
     @ManyToOne
-    @JsonBackReference(value = "paciente-agendarconsulta")  // Aqui paciente é referência BACK para medico
+    @JsonBackReference(value = "paciente-agendarconsulta")
+    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = true)
     private PacienteModel paciente;
 
     @ManyToOne
-    @JsonBackReference(value = "medico-consulta")  // Medico é referência BACK para paciente
+    @JsonBackReference(value = "medico-consulta")
+    @JoinColumn(name = "id_medico", referencedColumnName = "id", nullable = true)  // Especifica FK correta
     private MedicoModel medico;
 
     @Column(nullable = false)
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horaConsulta;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String descConsulta;
 
     @Column(nullable = false, length = 50)
     private String especialidade;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String convenio;
 }
+

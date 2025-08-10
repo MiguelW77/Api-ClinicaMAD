@@ -1,8 +1,11 @@
 package com.API.clinicaMedica.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.API.clinicaMedica.Model.MedicoModel;
+import com.API.clinicaMedica.Repository.MedicoRepository;
 import com.API.clinicaMedica.Service.MedicoService;
 
 @RestController
@@ -23,11 +28,22 @@ public class MedicoController {
 
     @Autowired
     private MedicoService service;
+    @Autowired 
+    MedicoRepository medicoRepository;
 
     @GetMapping
     public List<MedicoModel> listarTodos() {
         return service.listarTodos();
     }
+
+    @GetMapping("/disponiveis")
+     public ResponseEntity<List<MedicoModel>> getMedicosDisponiveis(
+      @RequestParam String especialidade, 
+      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data) {
+
+    List<MedicoModel> medicos = medicoRepository.findMedicosDisponiveisPorEspecialidadeEData(especialidade, data);
+    return ResponseEntity.ok(medicos);
+  }
 
     @GetMapping("/{id}")
     public ResponseEntity<MedicoModel> buscarPorId(@PathVariable Long id) {

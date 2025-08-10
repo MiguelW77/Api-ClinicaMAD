@@ -6,15 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.API.clinicaMedica.Model.AgendarConsultaModel;
+import com.API.clinicaMedica.Model.MedicoModel;
+import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Repository.ConsultaRepository;
+import com.API.clinicaMedica.Repository.MedicoRepository;
+import com.API.clinicaMedica.Repository.PacienteRepository;
+
+import jakarta.persistence.EntityNotFoundException;
+
+
 
 @Service
 public class ConsultaService {
 
     @Autowired
     private ConsultaRepository repository;
+    @Autowired
+    private MedicoRepository medicoRepository;
+    @Autowired
+    private PacienteRepository pacienteRepository;
 
     public AgendarConsultaModel salvar(AgendarConsultaModel consulta) {
+        //MedicoModel medico = medicoRepository.findById(medicoId)
+    //.orElseThrow(() -> new EntityNotFoundException("Médico não encontrado"));
+
+//PacienteModel paciente = pacienteRepository.findById(id)
+    //.orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
+
+//consulta.setMedico(medico);
+//consulta.setPaciente(paciente);
         return repository.save(consulta);
     }
 
