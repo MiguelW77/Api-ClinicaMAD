@@ -21,15 +21,15 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // NÃO use "*" aqui se você enviar credentials: 'include'.
+        
         config.setAllowedOrigins(Arrays.asList(
             "http://127.0.0.1:5500",   // Live Server (VSCode) ou onde está seu front
             "http://localhost:5500"    // alternativa, caso use localhost
         ));
 
+        config.setAllowCredentials(true); // ESSENCIAL para enviar cookies
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "X-Requested-With"));
-        config.setAllowCredentials(true); // ESSENCIAL para enviar cookies
         config.setExposedHeaders(Arrays.asList("Authorization")); // se futuramente expor token
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

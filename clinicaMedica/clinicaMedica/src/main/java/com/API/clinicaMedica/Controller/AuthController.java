@@ -1,11 +1,14 @@
 package com.API.clinicaMedica.Controller;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,10 +52,14 @@ public class AuthController {
         Optional<MedicoModel> optMedico = medicoService.login(loginRequest.getEmail(), loginRequest.getSenha());
         if(optMedico.isPresent()){
              
-            session.setAttribute("usuarioLogado",optMedico.get());
+            session.setAttribute("usuarioLogado",optMedico.get().getId());
             session.setAttribute("tipoUsuario", "medico");
+
+            List<SimpleGrantedAuthority> authorities =
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_MEDICO"));
+
             UsernamePasswordAuthenticationToken authToken = 
-            new UsernamePasswordAuthenticationToken(tipo, optMedico);
+            new UsernamePasswordAuthenticationToken(optMedico.get(), null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authToken);
             System.out.print("Sessão usuário médico iniciada!");
             return ResponseEntity.ok(optMedico.get());   
@@ -65,12 +72,16 @@ public class AuthController {
         Optional<PacienteModel> optPaciente = pacienteService.login(loginRequest.getEmail(), loginRequest.getSenha());
         if(optPaciente.isPresent()){
             
-            session.setAttribute("usuarioLogado", optPaciente.get());
+            session.setAttribute("usuarioLogado", optPaciente.get().getId());
             session.setAttribute("tipoUsuario","paciente");
+
+            List<SimpleGrantedAuthority> authorities = 
+            Collections.singletonList(new SimpleGrantedAuthority("ROLE_PACIENTE"));
+
             UsernamePasswordAuthenticationToken authToken = 
-            new UsernamePasswordAuthenticationToken(tipo, optPaciente);
+            new UsernamePasswordAuthenticationToken(optPaciente.get(), null, authorities);
             SecurityContextHolder.getContext().setAuthentication(authToken);
-            System.out.print("Sessão usuário paciente inciada!");
+            System.out.print("Sessão usuário = paciente inciada!");
             return ResponseEntity.ok(optPaciente.get());
         }
         }else{
@@ -86,21 +97,28 @@ public class AuthController {
     
     @GetMapping("/me")
     public ResponseEntity<?> usuarioLogado(HttpSession session){
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("Autenticação principal: " + auth.getPrincipal());
+        System.out.println("Authenticated ? " + auth.isAuthenticated());
+        
         Long usuarioId = (Long) session.getAttribute("usuarioLogado");
         String tipoUsuario = (String) session.getAttribute("tipoUsuario");
         if(usuarioId == null || tipoUsuario == null){
-            System.out.print("Nenhum usuário logado!");
+            System.out.println("Nenhum usuário logado!");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nenhum usuário logado!");
         }
         if("medico".equals(tipoUsuario)){
+            System.out.println("Médico encontrado!");
             return medicoRepository.findById(usuarioId)
             .map(medico -> ResponseEntity.ok().body(medico))
             .orElse(ResponseEntity.notFound().build());
         } else if ("paciente".equals(tipoUsuario)){
+            System.out.println("Paciente encontrado!");
             return pacienteRepository.findById(usuarioId)
             .map(paciente -> ResponseEntity.ok().body(paciente))
             .orElse(ResponseEntity.notFound().build());
         }
+        System.out.print("Tipo usuário inválido!");
         return ResponseEntity.badRequest().body("Tipo de usuário inválido!");
     }
     @PostMapping("/logout")
