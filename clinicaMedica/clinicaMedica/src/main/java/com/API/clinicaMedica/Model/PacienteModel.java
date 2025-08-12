@@ -61,12 +61,12 @@ public class PacienteModel {
     private String cep;
 
     @ManyToOne
-    @JsonBackReference(value = "medico-paciente")  // Paciente tem 1 médico (voltar para médico)
+    @JsonBackReference(value = "medico-paciente")  
     @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 
     @OneToMany(mappedBy = "paciente")
-    @JsonManagedReference(value = "paciente-agendarconsulta")  // Paciente tem consultas
+    @JsonManagedReference(value = "paciente-agendarconsulta")  
     private List<AgendarConsultaModel> consulta;
 
     @OneToMany(mappedBy = "paciente")

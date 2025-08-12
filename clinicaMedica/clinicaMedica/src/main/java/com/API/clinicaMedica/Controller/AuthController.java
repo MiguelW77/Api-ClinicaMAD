@@ -1,18 +1,16 @@
 package com.API.clinicaMedica.Controller;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
+
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,14 +56,20 @@ public ResponseEntity<?> login(@RequestBody LoginRequest dto) {
         Optional<MedicoModel> opt = medicoService.login(dto.getEmail(), dto.getSenha());
         if (opt.isPresent()) {
             String token = jwUtil.generateToken(opt.get().getId().toString(), "ROLE_MEDICO");
-            return ResponseEntity.ok(Collections.singletonMap("token", token));
+             Map<String, Object> resposta = new HashMap<>();
+            resposta.put("token", token);
+            resposta.put("idMedico", opt.get().getId());
+            return ResponseEntity.ok(resposta);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     } else if ("paciente".equalsIgnoreCase(tipo)) {
         Optional<PacienteModel> opt = pacienteService.login(dto.getEmail(), dto.getSenha());
         if (opt.isPresent()) {
             String token = jwUtil.generateToken(opt.get().getId().toString(), "ROLE_PACIENTE");
-            return ResponseEntity.ok(Collections.singletonMap("token", token));
+            Map<String, Object> resposta = new HashMap<>();
+            resposta.put("token", token);
+            resposta.put("idPaciente", opt.get().getId());
+            return ResponseEntity.ok(resposta);
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     }
@@ -79,7 +83,7 @@ public ResponseEntity<?> login(@RequestBody LoginRequest dto) {
     if (auth == null || !auth.isAuthenticated()) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Nenhum usuário");
     }
-    String subject = (String) auth.getPrincipal(); // aqui definimos subject = id no token
+    String subject = (String) auth.getPrincipal(); 
     Long id = Long.valueOf(subject);
     String role = auth.getAuthorities().stream().findFirst().map(a -> a.getAuthority()).orElse("ROLE_USER");
 

@@ -25,10 +25,12 @@ public class SecurityConfig {
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/pacientes/**").permitAll()
-                .requestMatchers("/consultas").permitAll()
-                .requestMatchers("/consultas/**" ).permitAll()
+                .requestMatchers("/auth/register").permitAll()
+                .requestMatchers("/pacientes").permitAll()
+                .requestMatchers("/medicos").permitAll()
                 .requestMatchers("/auth/me").authenticated()
+                .requestMatchers("/pacientes/**").authenticated()
+                .requestMatchers("/consultas").authenticated()
                 .anyRequest().authenticated()
             );
 
