@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.API.clinicaMedica.DTO.ConsultaDTO;
 import com.API.clinicaMedica.Model.AgendarConsultaModel;
 import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Model.PacienteModel;
@@ -51,21 +52,37 @@ public class ConsultaController {
     }
 
     @PostMapping
-    public ResponseEntity<AgendarConsultaModel> criarConsulta(@RequestBody AgendarConsultaModel consulta, Authentication authenticated){
-        String emailUsuarioLogado = authenticated.getName();
-        PacienteModel paciente = pacienteRepository.findByEmail(emailUsuarioLogado)
-        .orElseThrow(()-> new RuntimeException("Paciente não encontrado!"));
-        Long medicoId = consulta.getMedico().getId();
+public ResponseEntity<ConsultaDTO> criarConsulta(
+        @RequestBody AgendarConsultaModel consulta,
+        Authentication authenticated) {
 
-        MedicoModel medico = medicoRepository.findById(medicoId)
-        .orElseThrow(()-> new RuntimeException("Médico não encontrado!"));
-       
-       
-        consulta.setMedico(medico);
-        consulta.setPaciente(paciente);
+    String principal = authenticated.getName();
+    Long pacienteId;
+    try {
+        pacienteId = Long.valueOf(principal);
+    } catch (NumberFormatException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
-        AgendarConsultaModel consultaSalva = consultaRepository.save(consulta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(consultaSalva);
+    PacienteModel paciente = pacienteRepository.findById(pacienteId)
+            .orElseThrow(() -> new RuntimeException("Paciente não encontrado!"));
+
+    if (consulta.getMedico() == null || consulta.getMedico().getId() == null) {
+        return ResponseEntity.badRequest().body(null);
+    }
+
+    Long medicoId = consulta.getMedico().getId();
+    MedicoModel medico = medicoRepository.findById(medicoId)
+            .orElseThrow(() -> new RuntimeException("Médico não encontrado!"));
+
+    consulta.setPaciente(paciente);
+    consulta.setMedico(medico);
+
+    AgendarConsultaModel consultaSalva = consultaRepository.save(consulta);
+    
+    // Retornar DTO
+    return ResponseEntity.status(HttpStatus.CREATED)
+            .body(new ConsultaDTO(consultaSalva));
 }
 
     @PutMapping("/{id}")

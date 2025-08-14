@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -61,16 +62,16 @@ public class PacienteModel {
     private String cep;
 
     @ManyToOne
-    @JsonBackReference(value = "medico-paciente")  
+    @JsonIgnore
     @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 
     @OneToMany(mappedBy = "paciente")
-    @JsonManagedReference(value = "paciente-agendarconsulta")  
+    @JsonIgnore 
     private List<AgendarConsultaModel> consulta;
 
     @OneToMany(mappedBy = "paciente")
-    @JsonManagedReference(value = "paciente-agendarconsulta")
+    @JsonIgnore
     private List<AgendarConsultaModel> agendconsult;
 
     @OneToMany(mappedBy = "paciente")

@@ -28,9 +28,9 @@ public class SecurityConfig {
                 .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/pacientes").permitAll()
                 .requestMatchers("/medicos").permitAll()
+                .requestMatchers("/consultas").authenticated()
                 .requestMatchers("/auth/me").authenticated()
                 .requestMatchers("/pacientes/**").authenticated()
-                .requestMatchers("/consultas").authenticated()
                 .anyRequest().authenticated()
             );
 

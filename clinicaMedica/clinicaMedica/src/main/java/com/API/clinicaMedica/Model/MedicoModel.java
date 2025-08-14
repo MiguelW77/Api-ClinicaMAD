@@ -2,6 +2,7 @@ package com.API.clinicaMedica.Model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
@@ -51,7 +52,7 @@ public class MedicoModel {
     private String termos;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference(value = "medico-consulta")  // Médico tem consultas
+    @JsonIgnore // Médico tem consultas
     private List<AgendarConsultaModel> consultas;
 
     @OneToMany(mappedBy = "medico")
@@ -63,6 +64,6 @@ public class MedicoModel {
     private List<ProntuarioModel> prontuarios;
 
     @OneToMany(mappedBy = "medico")
-    @JsonManagedReference(value = "medico-paciente")  // Médico tem pacientes
+    @JsonIgnore  // Médico tem pacientes
     private List<PacienteModel> pacientes;
 }
