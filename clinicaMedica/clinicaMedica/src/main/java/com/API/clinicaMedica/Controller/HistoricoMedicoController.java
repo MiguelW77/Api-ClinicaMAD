@@ -13,36 +13,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.API.clinicaMedica.Model.ProntuarioModel;
-import com.API.clinicaMedica.Service.ProntuarioService;
+import com.API.clinicaMedica.Model.HistoricoMedicoPacienteModel;
+import com.API.clinicaMedica.Service.HistoricoMedicoService;
 
 @RestController
-@RequestMapping("/prontuarios")
-public class ProntuarioController {
+@RequestMapping("/historico-medico")
+public class HistoricoMedicoController {
 
     @Autowired
-    private ProntuarioService service;
+    private HistoricoMedicoService service;
 
     @GetMapping
-    public List<ProntuarioModel> listarTodos() {
+    public List<HistoricoMedicoPacienteModel> listarTodos() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProntuarioModel> buscarPorId(@PathVariable Long id) {
-        ProntuarioModel prontuario = service.buscarPorId(id);
-        return prontuario != null ? ResponseEntity.ok(prontuario) : ResponseEntity.notFound().build();
+    public ResponseEntity<HistoricoMedicoPacienteModel> buscarPorId(@PathVariable Long id) {
+        HistoricoMedicoPacienteModel historico = service.buscarPorId(id);
+        return historico != null ? ResponseEntity.ok(historico) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ProntuarioModel> salvar(@RequestBody ProntuarioModel prontuario) {
-        return ResponseEntity.ok(service.salvar(prontuario));
+    public ResponseEntity<HistoricoMedicoPacienteModel> salvar(@RequestBody HistoricoMedicoPacienteModel historico) {
+        return ResponseEntity.ok(service.salvar(historico));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProntuarioModel> atualizar(@PathVariable Long id, @RequestBody ProntuarioModel prontuario) {
+    public ResponseEntity<HistoricoMedicoPacienteModel> atualizar(@PathVariable Long id, @RequestBody HistoricoMedicoPacienteModel historico) {
         try {
-            return ResponseEntity.ok(service.atualizar(id, prontuario));
+            return ResponseEntity.ok(service.atualizar(id, historico));
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }

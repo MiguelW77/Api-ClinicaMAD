@@ -22,23 +22,25 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ExamesModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "id_paciente", referencedColumnName = "id", nullable = false)
+    @JsonBackReference(value = "paciente-exame")
+    @JoinColumn(name = "id_paciente")
     private PacienteModel paciente;
 
     @ManyToOne
-    @JsonBackReference
-    @JoinColumn(name = "id_medico",referencedColumnName = "id", nullable = false)
+    @JsonBackReference(value = "medico-exame")
+    @JoinColumn(name = "id_medico")
     private MedicoModel medico;
 
     @Column(nullable = false)
-    private LocalDate data_exame;
+    private LocalDate dataExame;
 
     @Column(nullable = false, length = 100)
-    private String tipo_exame;
+    private String tipoExame;
 }
+

@@ -4,49 +4,49 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
 
 import com.API.clinicaMedica.Model.MedicoModel;
 import com.API.clinicaMedica.Repository.MedicoRepository;
 
 @Service
 public class MedicoService {
-    @Autowired
-    private  MedicoRepository repository;
 
-    public MedicoModel Salvar(MedicoModel medico) {
+    @Autowired
+    private MedicoRepository repository;
+
+    public Optional<MedicoModel> login(String email, String senha){
+        return repository.findByEmailAndSenha(email,senha);
+        }
+
+    public MedicoModel salvar(MedicoModel medico) {
         return repository.save(medico);
     }
 
-
-    public List<MedicoModel> ListarTodos() {
+    public List<MedicoModel> listarTodos() {
         return repository.findAll();
     }
 
-    
-    public MedicoModel BuscarPorId(String id) {
-       
-        Optional<MedicoModel> medico = repository.findById(id);
-        if (medico.isPresent()) {
-            return medico.get();
-        } else {
-            return null;
-        }
+    public MedicoModel buscarPorId(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
-         public MedicoModel Atualizar(String id, MedicoModel medico) {
-    MedicoModel medicoExistente = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Médico não encontrado com o ID: " + id));
+    public MedicoModel atualizar(Long id, MedicoModel medico) {
+        MedicoModel existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Médico não encontrado com o ID: " + id));
 
-    medicoExistente.setNome(medico.getNome());
-    medicoExistente.setEspecialidade(medico.getEspecialidade());
-    medicoExistente.setCrm(medico.getCrm());
+        existente.setNome(medico.getNome());
+        existente.setEspecialidade(medico.getEspecialidade());
+        existente.setCrm(medico.getCrm());
+        existente.setTelefone(medico.getTelefone());
+        existente.setEmail(medico.getEmail());
 
-    return repository.save(medicoExistente);
+        return repository.save(existente);
+    }
 
-  }
-
-    public void Deletar(String id) {
+    public void deletar(Long id) {
         repository.deleteById(id);
     }
 }

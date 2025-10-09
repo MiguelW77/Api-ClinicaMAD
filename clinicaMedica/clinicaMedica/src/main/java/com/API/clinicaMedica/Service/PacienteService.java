@@ -4,49 +4,47 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+
+
 import com.API.clinicaMedica.Model.PacienteModel;
 import com.API.clinicaMedica.Repository.PacienteRepository;
 
 @Service
 public class PacienteService {
- @Autowired
+
+    @Autowired
     private PacienteRepository repository;
 
-    public PacienteModel Salvar(PacienteModel paciente) {
+    public Optional<PacienteModel> login(String email, String senha){
+        return repository.findByEmailAndSenha(email,senha);
+    }
+
+    public PacienteModel salvar(PacienteModel paciente) {
         return repository.save(paciente);
     }
 
-
-    public List<PacienteModel> ListarTodos() {
+    public List<PacienteModel> listarTodos() {
         return repository.findAll();
     }
 
-    
-    public PacienteModel BuscarPorId(String id) {
-        Optional<PacienteModel> paciente = repository.findById(id);
-        if (paciente.isPresent()) {
-            return paciente.get();
-        } else {
-            return null;
-        }
+    public PacienteModel buscarPorId(Long id) {
+        return repository.findById(id).orElse(null);
     }
-       
 
-         public PacienteModel Atualizar(String id, PacienteModel paciente) {
-    PacienteModel pacienteExistente = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Paciente não encontrado com o ID: " + id));
+    public PacienteModel atualizar(Long id, PacienteModel paciente) {
+        PacienteModel existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Paciente não encontrado com o ID: " + id));
 
-    pacienteExistente.setNome(paciente.getNome());
-    pacienteExistente.setCpf(paciente.getCpf());
+        existente.setNome(paciente.getNome());
+        existente.setCpf(paciente.getCpf());
+        
 
-    return repository.save(pacienteExistente);
+        return repository.save(existente);
+    }
 
-  }
-
-    public void Deletar(String id) {
+    public void deletar(Long id) {
         repository.deleteById(id);
     }
-
-    
 }

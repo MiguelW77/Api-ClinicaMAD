@@ -1,7 +1,6 @@
 package com.API.clinicaMedica.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,36 +10,36 @@ import com.API.clinicaMedica.Repository.ProntuarioRepository;
 
 @Service
 public class ProntuarioService {
+
     @Autowired
     private ProntuarioRepository repository;
 
-    public ProntuarioModel Salvar(ProntuarioModel prontuario){
+    public ProntuarioModel salvar(ProntuarioModel prontuario) {
         return repository.save(prontuario);
     }
 
-    public List<ProntuarioModel> ListarTodos(){
+    public List<ProntuarioModel> listarTodos() {
         return repository.findAll();
     }
 
-    public ProntuarioModel BuscarPorId(String id){
-        Optional<ProntuarioModel> prontuario = repository.findById(id);
-        if (prontuario.isPresent()) {
-            return prontuario.get();
-        } else {
-            return null;
-        }
+    public ProntuarioModel buscarPorId(Long id) {
+        return repository.findById(id).orElse(null);
     }
-    public ProntuarioModel Atualizar(String id, ProntuarioModel prontuario){
-        ProntuarioModel prontuarioExistente = repository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Prontuario não encontrado com o ID:" + id));
-        prontuarioExistente.setCrm_medico(prontuario.getCrm_medico());
-        prontuarioExistente.setDiagnostico(prontuario.getDiagnostico());
-        prontuarioExistente.setNome_medico(prontuario.getNome_medico());
-        prontuarioExistente.setPrescricao(prontuario.getPrescricao());
-        prontuarioExistente.setSintomas(prontuario.getSintomas());
-        return repository.save(prontuarioExistente);
+
+    public ProntuarioModel atualizar(Long id, ProntuarioModel prontuario) {
+        ProntuarioModel existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prontuário não encontrado com ID: " + id));
+
+        existente.setNomeMedico(prontuario.getNomeMedico());
+        existente.setCrmMedico(prontuario.getCrmMedico());
+        existente.setSintomas(prontuario.getSintomas());
+        existente.setDiagnostico(prontuario.getDiagnostico());
+        existente.setPrescricao(prontuario.getPrescricao());
+
+        return repository.save(existente);
     }
-    public void Deletar(String id){
-         repository.deleteById(id);
+
+    public void deletar(Long id) {
+        repository.deleteById(id);
     }
 }
